@@ -1,0 +1,23 @@
+version: '3'
+
+services:
+  cleansight:
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      - NODE_ENV=production
+    restart: unless-stopped
+    # Uncomment for persistent cache volume
+    # volumes:
+    #   - cache-data:/app/cache
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "http://localhost:8080"]
+      interval: 1m
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+# Uncomment for persistent cache volume
+# volumes:
+#   cache-data:
